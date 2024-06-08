@@ -1,10 +1,13 @@
 import sys
-sys.path.append('./')
+
+sys.path.append("./")
 
 from langchain import hub
 from langchain.agents import AgentExecutor, tool
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.agents.output_parsers.openai_functions import OpenAIFunctionsAgentOutputParser
+from langchain.agents.output_parsers.openai_functions import (
+    OpenAIFunctionsAgentOutputParser,
+)
 from langchain.agents import AgentExecutor
 from langchain_core.utils.function_calling import convert_to_openai_function
 from helpers import printObject
@@ -17,10 +20,8 @@ from langchain.agents.format_scratchpad import format_to_openai_function_message
 _ = load_dotenv(find_dotenv())  # read local .env file
 
 
-
 # Tools
 tools = [TavilySearchResults(max_results=1)]
-
 
 
 # prompt
@@ -36,7 +37,10 @@ printObject("prompt", prompt)
 
 
 # model
-model = OllamaFunctions(model="mistral:v0.2")
+model = OllamaFunctions(
+    # base_url="https://ax17kk73vpkws0jx.us-east-1.aws.endpoints.huggingface.cloud",
+    model="Mistral:v0.2",
+)
 printObject("llm", model)
 
 
@@ -54,8 +58,8 @@ model_with_tools = model.bind(functions=converted_tools)
 printObject("llm with tools", model_with_tools)
 
 # Test invoke
-result = model_with_tools.invoke("what is the weather in New York?")
-print("result", result)
+# result = model_with_tools.invoke("what is the weather in New York?")
+# print("result", result)
 
 # agent = (
 #         RunnablePassthrough.assign(
